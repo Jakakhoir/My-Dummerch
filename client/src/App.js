@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { Switch, Route, useHistory } from "react-router-dom";
+import {  Route, useNavigate, Routes } from "react-router-dom";
 import { UserContext } from "./context/userContext";
 
 import Auth from "./pages/Auth";
@@ -19,22 +19,22 @@ import { API } from "./config/api";
 
 function App() {
   let api = API();
-  let history = useHistory();
+  let navigate = useNavigate();
   const [state, dispatch] = useContext(UserContext);
 
-  useEffect(() => {
-    // Redirect Auth
-    if (state.isLogin == false) {
-      history.push("/auth");
-    } else {
-      if (state.user.status == "admin") {
-        history.push("/complain-admin");
-        // history.push("/complain-admin");
-      } else if (state.user.status == "customer") {
-        history.push("/");
-      }
-    }
-  }, [state]);
+  // useEffect(() => {
+  //   // Redirect Auth
+  //   if (state.isLogin == false) {
+  //     navigate("/auth");
+  //   } else {
+  //     if (state.user.status == "admin") {
+  //       navigate("/complain-admin");
+  //       // history.push("/complain-admin");
+  //     } else if (state.user.status == "customer") {
+  //       navigate("/");
+  //     }
+  //   }
+  // }, [state]);
 
   const checkUser = async () => {
     try {
@@ -73,20 +73,20 @@ function App() {
   }, []);
 
   return (
-    <Switch>
-      <Route exact path="/" component={Product} />
-      <Route path="/auth" component={Auth} />
-      <Route path="/product/:id" component={DetailProduct} />
-      <Route path="/complain" component={Complain} />
-      <Route path="/profile" component={Profile} />
-      <Route path="/complain-admin" component={ComplainAdmin} />
-      <Route path="/category-admin" component={CategoryAdmin} />
-      <Route path="/edit-category/:id" component={UpdateCategoryAdmin} />
-      <Route path="/add-category" component={AddCategoryAdmin} />
-      <Route path="/product-admin" component={ProductAdmin} />
-      <Route path="/add-product" component={AddProductAdmin} />
-      <Route path="/edit-product/:id" component={UpdateProductAdmin} />
-    </Switch>
+    <Routes>
+      <Route exact path="/" element={<Product/> } />
+      <Route path="/auth" element={<Auth/>} />
+      <Route path="/product/:id" element={<DetailProduct/>} />
+      <Route path="/complain" element={<Complain/>} />
+      <Route path="/profile" element={<Profile/>} />
+      <Route path="/complain-admin" element={<ComplainAdmin/>} />
+      <Route path="/category-admin" element={<CategoryAdmin/>} />
+      <Route path="/edit-category/:id" element={<UpdateCategoryAdmin/>} />
+      <Route path="/add-category" element={<AddCategoryAdmin/>} />
+      <Route path="/product-admin" element={<ProductAdmin/>} />
+      <Route path="/add-product" element={<AddProductAdmin/>} />
+      <Route path="/edit-product/:id" element={<UpdateProductAdmin/>} />
+    </Routes>
   );
 }
 

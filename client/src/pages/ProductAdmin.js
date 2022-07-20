@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Table, Button } from "react-bootstrap";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import ShowMoreText from "react-show-more-text";
 import rupiahFormat from "rupiah-format";
 
@@ -18,7 +18,7 @@ import { useQuery, useMutation } from "react-query";
 import { API } from "../config/api";
 
 export default function ProductAdmin() {
-  let history = useHistory();
+  let history = useNavigate();
   let api = API();
 
   // Variabel for delete product data
@@ -46,11 +46,11 @@ export default function ProductAdmin() {
   });
 
   const addProduct = () => {
-    history.push("/add-product");
+    history("/add-product");
   };
 
   const handleEdit = (id) => {
-    history.push("/edit-product/" + id);
+    history("/edit-product/" + id);
   };
 
   // For get id product & show modal confirm delete data

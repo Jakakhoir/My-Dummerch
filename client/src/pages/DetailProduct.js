@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import convertRupiah from "rupiah-format";
 
@@ -14,7 +14,7 @@ import { useQuery, useMutation } from "react-query";
 import { API } from "../config/api";
 
 export default function DetailProduct() {
-  let history = useHistory();
+  let history = useNavigate();
   let { id } = useParams();
   let api = API();
 
@@ -35,7 +35,7 @@ export default function DetailProduct() {
     //change this to the script source you want to load, for example this is snap.js sandbox env
     const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
     //change this according to your client-key
-    const myMidtransClientKey = "Client key here ...";
+    const myMidtransClientKey = "SB-Mid-client-zPu0WWVcBeHQHyvO";
 
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransScriptUrl;
@@ -82,12 +82,12 @@ export default function DetailProduct() {
         onSuccess: function (result) {
           /* You may add your own implementation here */
           console.log(result);
-          history.push("/profile");
+          history("/profile");
         },
         onPending: function (result) {
           /* You may add your own implementation here */
           console.log(result);
-          history.push("/profile");
+          history("/profile");
         },
         onError: function (result) {
           /* You may add your own implementation here */

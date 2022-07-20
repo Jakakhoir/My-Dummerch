@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createElement } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { useParams, useHistory } from "react-router";
+import { useParams, useNavigate } from "react-router";
 
 import NavbarAdmin from "../components/NavbarAdmin";
 import CheckBox from "../components/form/CheckBox";
@@ -17,7 +17,7 @@ export default function UpdateProductAdmin() {
   const title = "Product admin";
   document.title = "DumbMerch | " + title;
 
-  let history = useHistory();
+  let history = useNavigate();
   let api = API();
   const { id } = useParams();
 
@@ -91,16 +91,7 @@ export default function UpdateProductAdmin() {
   const handleSubmit = useMutation(async (e) => {
     try {
       e.preventDefault();
-
-            // Configuration
-            const config = {
-              method: "PATCH",
-              headers: {
-                Authorization: "Basic " + localStorage.token,
-              },
-              body: formData,
-            };
-
+       
       // Store data with FormData as object
       const formData = new FormData();
       if (preview) {
@@ -112,12 +103,19 @@ export default function UpdateProductAdmin() {
       formData.set("qty", form.qty);
       formData.set("categoryId", categoryId);
 
-
+ // Configuration
+ const config = {
+  method: "PATCH",
+  headers: {
+    Authorization: "Basic " + localStorage.token,
+  },
+  body: formData,
+}; 
 
       // Insert product data
       const response = await api.patch("/product/" + product.id, config);
 
-      history.push("/product-admin");
+      history("/product-admin");
     } catch (error) {
       console.log(error);
     }

@@ -39,6 +39,7 @@ exports.register = async (req, res) => {
       password: hashedPassword,
       status: "customer",
     });
+    
 
     // generate token
     const token = jwt.sign({ id: user.id }, process.env.TOKEN_KEY);
@@ -51,6 +52,14 @@ exports.register = async (req, res) => {
         token,
       },
     });
+    if(newUser.email === schema.email){ 
+      return res.status(400).send({
+        error: {
+          message: "email has already exist!",
+        },
+      }); 
+
+    }
   } catch (error) {
     console.log(error);
     res.status(500).send({

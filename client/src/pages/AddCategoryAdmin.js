@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 
 import NavbarAdmin from "../components/NavbarAdmin";
 
@@ -18,7 +18,7 @@ export default function AddCategoryAdmin() {
   const title = "Category admin";
   document.title = "DumbMerch | " + title;
 
-  let history = useHistory();
+  let history = useNavigate();
   let api = API();
 
   const [category, setCategory] = useState("");
@@ -49,7 +49,7 @@ export default function AddCategoryAdmin() {
 
       console.log(response);
 
-      history.push("/category-admin");
+      history("/category-admin");
     } catch (error) {
       console.log(error);
     }

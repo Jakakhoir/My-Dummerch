@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Masonry from "react-masonry-css";
 import { Container, Row, Col, FormControl} from "react-bootstrap";
 

@@ -1,4 +1,32 @@
 const { product, user, category, productCategory } = require("../../models");
+const {Op} = require('sequelize')
+exports.getSearch = async (req, res) => {
+  const search = req.query.search_query || "";
+  const totalRows = await product.count({
+    where:{
+        [Op.or]: [{name:{
+            [Op.like]: '%'+search+'%'
+        }}]
+    }
+}); 
+
+const result = await product.findAll({
+  where:{
+      [Op.or]: [{name:{
+          [Op.like]: '%'+search+'%'
+      }}]
+  },
+  order:[
+      ['id', 'DESC']
+  ]
+});
+res.json({
+  result: result,
+  // totalRows: totalRows,
+
+});
+
+}
 
 exports.getProducts = async (req, res) => {
   try {
@@ -174,7 +202,7 @@ exports.updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
     let { categoryId } = req.body;
-    categoryId = await categoryId.split(",");
+    categoryId = await categoryId?.split(",");
 
     const data = {
       name: req?.body?.name,
@@ -192,11 +220,11 @@ exports.updateProduct = async (req, res) => {
     });
 
     let productCategoryData = [];
-    if (categoryId != 0 && categoryId[0] != "") {
-      productCategoryData = categoryId.map((item) => {
-        return { idProduct: parseInt(id), idCategory: parseInt(item) };
-      });
-    }
+    // if (categoryId != 0 && categoryId[0] != "") {
+    //   productCategoryData = categoryId.map((item) => {
+    //     return { idProduct: parseInt(id), idCategory: parseInt(item) };
+    //   });
+    // }
 
     if (productCategoryData.length != 0) {
       await productCategory.bulkCreate(productCategoryData);

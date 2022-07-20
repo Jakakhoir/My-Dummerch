@@ -16,6 +16,7 @@ const {
   addProduct,
   updateProduct,
   deleteProduct,
+  getSearch,
 } = require("../controllers/product");
 const {
   getTransactions,
@@ -45,6 +46,7 @@ router.delete("/user/:id", deleteUser);
 
 router.get("/profile", auth, getProfile);
 
+router.get("/search",  getSearch);
 router.get("/products", auth, getProducts);
 router.get("/product/:id", auth, getProduct);
 router.post("/product", auth, uploadFile("image"), addProduct);
